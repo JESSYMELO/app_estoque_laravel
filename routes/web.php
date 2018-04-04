@@ -11,10 +11,19 @@
 |
 */
 
-Route::get('/produtos/pesquisar', 'ProdutoController@pesquisar'); {
-        return view('welcome');
-};
+Route::get('/produtos/pesquisar', 'ProdutoController@pesquisar');
+{
+    //return view('welcome')
 
-Route::post('/produtos/pesquisar', 'ProdutoController@pesquisar');{
+    Route::post('/produtos/pesquisar', 'ProdutoController@pesquisar');
+
+
+    Route::get('/produtos/inserir', 'ProdutoController@mostrar_inserir');
+
+
+    Route::post('/produtos/inserir', 'ProdutoController@inserir');
+
+    Route::get('/produtos/alterar/{id}', 'ProdutoController@mostrar_alterar');
+
 
 }
