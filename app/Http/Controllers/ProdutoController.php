@@ -20,7 +20,7 @@ class ProdutoController extends Controller
      $descricao = Input::get('descricao');
 
      //busca produtos com o conteudo da $descricao
-     $produtos = Produto::where('descricao', 'like', '%' . $descricao . '%')->get();
+     $produtos = Produto::where('descricao','like','%'.$descricao.'%')->get();
 
 
      //chama a view produto.pesquisar
@@ -56,9 +56,46 @@ class ProdutoController extends Controller
      return view('produto.inserir')->with('mensagem',$mensagem);
  }
 
- public function mostrar_alterar(){
+ public function mostrar_alterar($id){
 
-     return view('produto.alterar');
+     //busca no banco o registro com o id recebido
+     $produto = Produto::find($id);
+
+     //envia os dados deste registro a view produto.alterar
+     return view('produto.alterar')->with('produto',$produto);
     }
 
+ public function alterar(){
+
+   $id = Input::get('id');
+   $p = Produto::find($id);
+
+   $p->descricao = Input::get('descricao');
+   $p->quantidade = Input::get('quantidade');
+   $p->valor = Input::get('valor');
+   $p->data_vencimento = Input::get('data_vencimento');
+
+   $p->save();
+
+   $mensagem = "Produto alterado com sucesso!";
+   $produtos = Produto::all();
+   return view('produto.pesquisar')->with('mensagem',$mensagem)->with('produtos',$produtos);
+ }
+
+ public function excluir($id){
+     //criando um objeto com o id recebido pela rota
+     $produto = Produto::find($id);
+
+     //Excluindo este objeto
+     $produto->delete();
+
+     //criando uma mensagem para ser enviada a view produto.pesquisar
+     $mensagem = "Produto excluído com sucesso!";
+
+     //capturando objetos para enviar a view produto.pesquisar
+     $produtos = Produto::all();
+
+     //retornando a view produto.pesquisar
+     return view('produto.pesquisar')->with('mensagem',$mensagem)->with('produtos',$produtos);
+ }
 }

@@ -5,19 +5,37 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link href="../css/app.css" rel="stylesheet">
-    <title>Document</title>
+    <link href="../../css/app.css" rel="stylesheet">
+    <title>Pesquisar produto</title>
 </head>
 <body>
 <div class="container">
     <h1 class="mt-2">Pesquisa de Produtos</h1>
-    @if(count($produtos)==0)
 
+    @if(!empty($mensagem))
+        <div class="alert alert-success mt-2">{{$mensagem}}</div>
+    @endif
+
+
+    @if(count($produtos)==0)
         <div class="alert alert-danger mt-2">Nenhum Produto encontrado com essa descrição</div>
     @else
+
+
+
+
+        <form action="/produtos/pesquisar" method="post" class="form-inline mt-2">
+            <input type="hidden" name="_token" value="{{{csrf_token()}}}">
+            <div class="form-group">
+                <label for="descricao">Descrição: </label>
+                <input type="text" id="descricao" name="descricao" class="form-control ml-2">
+            </div>
+            <input type="submit" class="btn btn-primary ml-2" value="Pesquisar">
+        </form>
+
         <table class="table mt-2 text-center">
             <tr>
-                <th>ID</th>
+                <th>id</th>
                 <th class="text-left">Descrição</th>
                 <th>Quantidade</th>
                 <th>Valor</th>
@@ -33,22 +51,14 @@
                     <td>{{$p->valor}}</td>
                     <td>{{$p->data_vencimento}}</td>
                     <td><a href="/produtos/excluir/{{$p->id}}"><button class="btn btn-danger">Excluir</button></a></td>
-                    <td><a href="/produtos/alterar{{$p->id}}"><button class="btn btn-warning">Alterar</button></a></td>
+                    <td><a href="/produtos/alterar/{{$p->id}}"><button class="btn btn-warning">Alterar</button></a></td>
                 </tr>
             @endforeach
         </table>
     @endif
 </div>
 
-    <h1 class="mt-2">Pesquisa de produtos</h1>
-    <form action="/produtos/pesquisar" method="post" class="form-inline mt-2">
-        <input type="hidden" name="_token" value="{{{csrf_token()}}}">
-        <div class="form-group">
-            <label for="descricao">Descrição: </label>
-            <input type="text" id="descricao" name="descricao" class="form-control ml-2">
-        </div>
-        <input type="submit" class="btn btn-primary ml-2" value="Pesquisar">
-    </form>
+
 
 </body>
 </html>

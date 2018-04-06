@@ -13,10 +13,10 @@
 
     <h1 class="mt-2">Inserir Produto</h1>
     @if(!empty($mensagem))
-        <div class="alert alert-success">Produto inserido com sucesso</div>
+        <div class="alert alert-success">Produto inserido com sucesso!</div>
     @endif
 
-    <form action="/produto/inserir" method="post" class="mt-2">
+    <form action="/produtos/inserir" method="post" class="mt-2">
         <input type="hidden" name="_token" value="{{{csrf_token()}}}">
         <div class="form-group">
             <label for="descricao">Descrição: <span class="text-danger">*</span></label>
@@ -41,3 +41,5 @@
 
 </body>
 </html>
+
+
